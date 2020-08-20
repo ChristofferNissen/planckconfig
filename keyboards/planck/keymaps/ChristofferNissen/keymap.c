@@ -93,18 +93,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | i3_1 | i3_2 | i3_3 | i3_4 | i3_5 | i3_6 | i3_7 | i3_8 | i3_9 | i3_0 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | BTN1 | BTN2 |      |      |      | LEFT | DOWN |  UP  |RIGHT |      |      |
+ * |      | BTN1 | BTN2 |      |      |      | LEFT | DOWN |  UP  |RIGHT | BTN1 | BTN2 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      | S_L  | S_U  | BTN1 |  UP  | BTN2 |
+ * |      |      |      |      |      |      | S_L  | S_D  | S_U  | S_R  |  UP  | RSFT |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             | S_R  | S_D  | LEFT | DOWN | Right|
+ * |      |      |      |      |      |             |      |      | LEFT | DOWN | Right|
  * `-----------------------------------------------------------------------------------'
  */
 [_i3] = LAYOUT_planck_grid(
     _______,  I3_macro1,    I3_macro2,    I3_macro3,    I3_macro4,    I3_macro5,    I3_macro6,    I3_macro7,    I3_macro8,    I3_macro9,    I3_macro0,    _______,
-    _______, KC_MS_BTN1, KC_MS_BTN2, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, KC_MS_WH_RIGHT, KC_MS_WH_UP,  KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2,
-    _______, _______, _______, _______, _______, _______, _______, KC_MS_WH_LEFT, KC_MS_WH_DOWN,  KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT
+    _______, KC_MS_BTN1, KC_MS_BTN2, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, KC_MS_BTN1, KC_MS_BTN2,
+    _______, KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_MS_WH_UP, KC_MS_WH_RIGHT, _______, KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_MS_WH_UP,  KC_MS_WH_RIGHT, KC_MS_UP, KC_RSFT,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______,  KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT
 ),
 
 /* Qwerty
