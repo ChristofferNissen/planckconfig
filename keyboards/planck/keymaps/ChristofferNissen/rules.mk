@@ -3,3 +3,4 @@ SRC += muse.c
 COMMAND_ENABLE = no
 COMBO_ENABLE = yes
 MACRO_ENABLE = yes
+MOUSEKEY_ENABLE = yes

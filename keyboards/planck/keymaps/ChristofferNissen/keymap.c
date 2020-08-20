@@ -65,10 +65,10 @@ enum combo_events {
 const uint16_t PROGMEM copy_combo[] = {KC_Z, KC_C, COMBO_END};
 const uint16_t PROGMEM paste_combo[] = {KC_X, KC_V, COMBO_END};
 
-combo_t key_combos[COMBO_COUNT] = {
-  [ZC_COPY] = COMBO_ACTION(copy_combo),
-  [XV_PASTE] = COMBO_ACTION(paste_combo),
-};
+// combo_t key_combos[COMBO_COUNT] = {
+//   [ZC_COPY] = COMBO_ACTION(copy_combo),
+//   [XV_PASTE] = COMBO_ACTION(paste_combo),
+// };
 
 void process_combo_event(uint8_t combo_index, bool pressed) {
   switch(combo_index) {
@@ -89,22 +89,22 @@ void process_combo_event(uint8_t combo_index, bool pressed) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* i3
+/* i3 & mouse
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |      | i3_1 | i3_2 | i3_3 | i3_4 | i3_5 | i3_6 | i3_7 | i3_8 | i3_9 | i3_0 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * |      | BTN1 | BTN2 |      |      |      | LEFT | DOWN |  UP  |RIGHT |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * |      |      |      |      |      |      |      | S_L  | S_U  | BTN1 |  UP  | BTN2 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * |      |      |      |      |      |             | S_R  | S_D  | LEFT | DOWN | Right|
  * `-----------------------------------------------------------------------------------'
  */
 [_i3] = LAYOUT_planck_grid(
     _______,  I3_macro1,    I3_macro2,    I3_macro3,    I3_macro4,    I3_macro5,    I3_macro6,    I3_macro7,    I3_macro8,    I3_macro9,    I3_macro0,    _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+    _______, KC_MS_BTN1, KC_MS_BTN2, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, KC_MS_WH_RIGHT, KC_MS_WH_UP,  KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2,
+    _______, _______, _______, _______, _______, _______, _______, KC_MS_WH_LEFT, KC_MS_WH_DOWN,  KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT
 ),
 
 /* Qwerty
@@ -120,9 +120,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    MT(MOD_LCTL, KC_ESC),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    LT(I3, KC_ESC),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSPO, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-    I3, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    MT(MOD_LCTL, KC_ESC), KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Colemak
