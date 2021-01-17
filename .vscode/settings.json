@@ -16,7 +16,18 @@
         "*.hpp": "cpp",
         "xstddef": "c",
         "type_traits": "c",
-        "utility": "c"
+        "utility": "c",
+        "array": "c",
+        "chrono": "c",
+        "compare": "c",
+        "functional": "c",
+        "istream": "c",
+        "memory_resource": "c",
+        "ostream": "c",
+        "ranges": "c",
+        "ratio": "c",
+        "tuple": "c",
+        "variant": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

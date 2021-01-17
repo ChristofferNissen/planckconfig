@@ -16,7 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "muse.h"
-
+#include "keymap_danish.h"
 
 enum planck_layers {
   _QWERTY,
@@ -93,18 +93,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | i3_1 | i3_2 | i3_3 | i3_4 | i3_5 | i3_6 | i3_7 | i3_8 | i3_9 | i3_0 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | BTN1 | BTN2 |      |      |      | LEFT | DOWN |  UP  |RIGHT | BTN1 | BTN2 |
+ * |      | BTN1 | BTN2 |      |      |      | LEFT | DOWN |  UP  |RIGHT |DK_ARNG|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      | S_L  | S_D  | S_U  | S_R  |  UP  | RSFT |
+ * |      |      |      |      |      |      |      |      |      |      |      | RSFT |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      | LEFT | DOWN | Right|
+ * |      |      |      |      |      |             |      | M_L  | M_UP |  M_D | M_R  |
  * `-----------------------------------------------------------------------------------'
  */
 [_i3] = LAYOUT_planck_grid(
-    _______,  I3_macro1,    I3_macro2,    I3_macro3,    I3_macro4,    I3_macro5,    I3_macro6,    I3_macro7,    I3_macro8,    I3_macro9,    I3_macro0,    _______,
-    _______, KC_MS_BTN1, KC_MS_BTN2, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, KC_MS_BTN1, KC_MS_BTN2,
-    _______, KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_MS_WH_UP, KC_MS_WH_RIGHT, _______, KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_MS_WH_UP,  KC_MS_WH_RIGHT, KC_MS_UP, KC_RSFT,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT
+    _______, I3_macro1, I3_macro2, I3_macro3, I3_macro4, I3_macro5, I3_macro6, I3_macro7, I3_macro8, I3_macro9, I3_macro0, KC_POWER,
+    _______, KC_MS_BTN1, KC_MS_BTN2, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, KC_RSFT,
+    _______, _______, _______, _______, _______, _______, _______, _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_UP , KC_MS_RIGHT
 ),
 
 /* Qwerty
@@ -120,9 +120,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    LT(I3, KC_ESC),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSPO, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-    MT(MOD_LCTL, KC_ESC), KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    LT(I3, KC_ESC),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, LT(I3, KC_QUOT),
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
+    MT(MOD_LCTL, KC_ESC), KC_LCTL, KC_LALT, KC_LGUI, LOWER, KC_SPC, KC_SPC, RAISE, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
 ),
 
 /* Colemak
@@ -175,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT_planck_grid(
     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, KC_PIPE,
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  S(KC_NUHS), S(KC_NUBS), KC_HOME, KC_END,  _______,
+    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUBS, S(KC_NUBS), KC_HOME, KC_END,  _______,
     _______, _______, _______, _______, _______, _______, _______, _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -193,7 +193,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT_planck_grid(
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, _______,
+    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, S(KC_NUHS), KC_PGUP, KC_PGDN, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -266,7 +266,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // when keycode QMKBEST is released
       }
       return false;
-      break;    
+      break;
     case MY_OTHER_MACRO:
       if (record->event.pressed) {
         SEND_STRING(SS_LCTL("ac")); // selects all and copies
@@ -335,7 +335,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
 
-    // DEFAULT 
+    // DEFAULT
     case QWERTY:
       if (record->event.pressed) {
         print("mode just switched to qwerty and this is a huge string\n");
