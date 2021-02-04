@@ -17,6 +17,50 @@ extern rgblight_config_t rgblight_config;
 #define _ADJUST 3
 #define _I3 4
 
+#ifdef UNICODEMAP_ENABLE
+enum unicode_names {
+    AE,
+    AEBIG,
+    OE,
+    OEBIG,
+    AA,
+    AABIG,
+    BANG,
+    IRONY,
+    SNEK
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+    [AE] = 0x00E6, // æ
+    [AEBIG] = 0x00C6, // Æ
+    [OE] = 0x00E6, // ø
+    [OEBIG] = 0x00C6, // Ø
+    [AA] = 0x00E6, // å
+    [AABIG] = 0x00C6, // Å
+    [BANG]  = 0x203D,  // ‽
+    [IRONY] = 0x2E2E,  // ⸮
+    [SNEK]  = 0x1F40D, // 🐍
+};
+// Then you can use X(SNEK) etc. in your keymap.
+// Characters often come in lower and upper case pairs, such as å and Å. To make inputting these characters easier, you can use XP(i, j)
+#endif
+
+#ifdef UCIS_ENABLE
+const qk_ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(
+    UCIS_SYM("aa", 0x00E5),                   // å
+    UCIS_SYM("aab", 0x00C5),                  // Å
+    UCIS_SYM("ae", 0x00E6),                   // æ
+    UCIS_SYM("aeb", 0x00C6),                  // Æ
+    UCIS_SYM("oe", 0x00F8),                   // ø
+    UCIS_SYM("oeb", 0x00D8),                  // Ø
+    UCIS_SYM("poop", 0x1F4A9),                // 💩
+    UCIS_SYM("rofl", 0x1F923),                // 🤣
+    UCIS_SYM("cuba", 0x1F1E8, 0x1F1FA),       // 🇨🇺
+    UCIS_SYM("look", 0x0CA0, 0x005F, 0x0CA0)  // ಠ_ಠ
+);
+#endif
+
+
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
@@ -45,19 +89,26 @@ enum custom_keycodes {
   RGB_SOL,  // RGB_MATRIX_SOLID_COLOR
   RGB_CYC,  // RGB_MATRIX_CYCLE_ALL
   RGB_DUO,  // RGB_MATRIX_RAINBOW_PINWHEELS
-  RGB_SCR   // RGB_MATRIX_CYCLE_LEFT_RIGHT
+  RGB_SCR,   // RGB_MATRIX_CYCLE_LEFT_RIGHT
+  EMOJIKEY
 };
 
-enum macro_keycodes {
-  KC_SAMPLEMACRO,
-};
+#if defined(DANISH) && defined(UNICODE_ENABLE)
+bool is_shift_active = false;
+bool is_a_active = false;
+bool is_o_active = false;
+
+uint16_t a_timer = 0;        // we will be using them soon.
+uint16_t o_timer = 0;
+#endif
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_I3] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       XXXXXXX, I3_macro1, I3_macro2, I3_macro3, I3_macro4,  I3_macro5, I3_macro6, I3_macro7, I3_macro8, I3_macro9, I3_macro0, KC_SLEP,\
+       XXXXXXX, I3_macro1, I3_macro2, I3_macro3, I3_macro4,  I3_macro5, I3_macro6, I3_macro7, I3_macro8, I3_macro9, I3_macro0, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, KC_MS_BTN1, KC_MS_BTN2, XXXXXXX, XXXXXXX, XXXXXXX,                     KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT, XXXXXXX, KC_WAKE,\
+      KC_LCTL, KC_MS_BTN1, KC_MS_BTN2, XXXXXXX, XXXXXXX, XXXXXXX,                     KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT, EMOJIKEY, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, KC_AUDIO_MUTE, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP, KC_MEDIA_PLAY_PAUSE,        KC_MS_LEFT, KC_MS_DOWN, KC_MS_UP, KC_MS_RIGHT, XXXXXXX, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -69,38 +120,54 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        LT(MO(_I3), KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,\
+      KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, LT(MO(_I3), KC_QUOT),\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE,  KC_RALT \
                                       //`--------------------------'  `--------------------------'
-
   ),
 
   [_LOWER] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_F6, KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX,\
+      KC_ESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_F6, KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                      KC_F12, KC_HOME, KC_END, KC_PGUP, KC_PGDN, XXXXXXX,\
+      KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                      KC_F12, KC_HOME, KC_END, KC_PGUP, KC_PGDN, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
                                       //`--------------------------'  `--------------------------'
     ),
 
+
+#ifdef UNICODEMAP_ENABLE
   [_RAISE] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
+      KC_ESC, XXXXXXX, XXXXXXX, XP(AE, AEBIG), XP(OE, OEBIG), XP(AA, AABIG),                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
                                       //`--------------------------'  `--------------------------'
   ),
+#else
+  [_RAISE] = LAYOUT_split_3x6_3( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+       KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_ESC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
+                                      //`--------------------------'  `--------------------------'
+  ),
+#endif
+
+
 
   [_ADJUST] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -131,20 +198,9 @@ void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
   }
 }
 
-void suspend_power_down_kb(void) {
-    rgb_matrix_set_suspend_state(true);
-    suspend_power_down_user();
-}
-
-void suspend_wakeup_init_kb(void) {
-    rgb_matrix_set_suspend_state(false);
-    suspend_wakeup_init_user();
-}
-
-
 void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
-      RGB_current_mode = rgblight_config.mode;
+        RGB_current_mode = rgblight_config.mode;
     #endif
     //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
     #ifdef SSD1306OLED
@@ -162,10 +218,6 @@ void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
 
-// const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
 char matrix_line_str[24];
 
 const char *read_layer_state(void) {
@@ -227,8 +279,19 @@ const char *read_usb_state(void) {
   return matrix_line_str;
 }
 
+
 void matrix_scan_user(void) {
    iota_gfx_task();
+#if defined(DANISH) && defined(UNICODE_ENABLE)
+  if (is_a_active || is_o_active) {
+    if (timer_elapsed(a_timer) > 1000) {
+      is_a_active = false;
+    }
+    if (timer_elapsed(o_timer) > 1000) {
+      is_o_active = false;
+    }
+  }
+#endif
 }
 
 void matrix_render_user(struct CharacterMatrix *matrix) {
@@ -236,7 +299,7 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
     // If you want to change the display of OLED, you need to change here
     matrix_write_ln(matrix, read_layer_state());
     matrix_write_ln(matrix, read_keylog());
-    // matrix_write_ln(matrix, read_usb_state());
+    matrix_write_ln(matrix, read_usb_state());
     // matrix_write_ln(matrix, read_keylogs());
 
     // matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
@@ -271,6 +334,96 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
+
+#ifdef UCIS_ENABLE
+    case EMOJIKEY:
+        if (record->event.pressed)
+            qk_ucis_start();
+        return false;
+        break;
+#endif
+
+#if defined(DANISH) && defined(UNICODE_ENABLE)
+    default:
+        is_a_active = false;
+        is_o_active = false;
+        break;
+
+    case KC_LSFT:
+        // true when pressed down, false on release
+        if (record->event.pressed) {
+            is_shift_active = true;
+        } else {
+            is_shift_active = false;
+        }
+        break;
+
+    case KC_E:
+      if (record->event.pressed) {
+        // a+e = æ   Shift+a+e = Æ
+        if (is_a_active) {
+            if (is_shift_active) {
+                tap_code(KC_BSPC);
+                // UC(0x00C6);
+                // SEND_STRING(SS_LALT("D83D+DC83"));
+                // send_unicode_hex_string("00C6");
+            } else {
+                tap_code(KC_BSPC);
+                // UC(0x00E6);
+                // send_unicode_hex_string("00E6");
+            }
+          is_a_active = false;
+          break;
+        }
+
+        // OE = ø       Shift+OE = Ø
+        if (is_o_active) {
+            if (is_shift_active)
+                SEND_STRING("Æ");
+            else
+                SEND_STRING("æ");
+          is_o_active = false;
+        }
+      }
+      break;
+
+    // A+A = å   Shift+A+A = Å
+    case KC_A:
+      if (record->event.pressed) {
+        if (is_a_active) {
+            if (is_shift_active)
+                SEND_STRING("Å");
+            else
+                SEND_STRING("å");
+
+          is_a_active = false;
+
+        } else {
+            is_a_active = true;
+            a_timer = timer_read();
+        }
+      }
+      break;
+
+    case KC_O:
+      if (record->event.pressed) {
+        if (!is_o_active) {
+            is_o_active = true;
+            o_timer = timer_read();
+        }
+      }
+      break;
+#endif
+
+#ifdef I3UI
+    case I3:
+        if (record->event.pressed) {
+          layer_on(_I3);
+        } else {
+          layer_off(_I3);
+        }
+        return false;
+        break;
     case I3_macro1:
       if (record->event.pressed) {
         //SEND_STRING(SS_TAP(X_LGUI) SS_TAP(X_2) ); // selects all and copies
@@ -332,46 +485,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+#endif
 
-    // default
-    case QWERTY:
-      if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_LOWER);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(_RAISE);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_RAISE);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-    case ADJUST:
-        if (record->event.pressed) {
-          layer_on(_ADJUST);
-          rgb_matrix_set_color(7, 255, 0, 0);
-        } else {
-          layer_off(_ADJUST);
-        }
-        return false;
-    case I3:
-        if (record->event.pressed) {
-          layer_on(_I3);
-        } else {
-          layer_off(_I3);
-        }
-        return false;
+#ifdef RGB_MATRIX_ENABLE
     case RGB_MOD:
       #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
@@ -417,15 +533,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       #endif
       break;
+#endif
+
+    // default
+    case QWERTY:
+      if (record->event.pressed) {
+        persistent_default_layer_set(1UL<<_QWERTY);
+      }
+      return false;
+    case LOWER:
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_LOWER);
+        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+    case RAISE:
+      if (record->event.pressed) {
+        layer_on(_RAISE);
+        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+    case ADJUST:
+        if (record->event.pressed) {
+          layer_on(_ADJUST);
+          rgb_matrix_set_color(7, 255, 0, 0);
+        } else {
+          layer_off(_ADJUST);
+        }
+        return false;
   }
   return true;
 }
 
-#ifdef RGB_MATRIX_ENABLE
+// #ifdef RGB_MATRIX_ENABLE
 
-void suspend_power_down_keymap(void) { rgb_matrix_set_suspend_state(true); }
+// void suspend_power_down_keymap(void) { rgb_matrix_set_suspend_state(true); }
 
-void suspend_wakeup_init_keymap(void) { rgb_matrix_set_suspend_state(false); }
+// void suspend_wakeup_init_keymap(void) { rgb_matrix_set_suspend_state(false); }
 
 // void rgb_matrix_layer_helper(uint8_t hue, uint8_t sat, uint8_t val, uint8_t led_type) {
 //     HSV hsv = {hue, sat, val};
@@ -527,4 +677,4 @@ void suspend_wakeup_init_keymap(void) { rgb_matrix_set_suspend_state(false); }
 //     check_default_layer(0, LED_FLAG_MODIFIER);
 
 // }
-#endif
+// #endif

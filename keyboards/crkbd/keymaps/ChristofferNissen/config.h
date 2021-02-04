@@ -31,11 +31,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // sudo util/docker_build.sh crkbd:ChristofferNissen:dfu-split-left
 
 #define SSD1306OLED
+// #undef USE_I2C
+// #undef SSD1306OLED
 
 #define USE_SERIAL_PD2
 
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 100
+#define TAPPING_TERM 200
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
@@ -58,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     #define RGB_MATRIX_HUE_STEP 8
     #define RGB_MATRIX_SAT_STEP 8
-    #define RGB_MATRIX_VAL_STEP 8
+    #define RGB_MATRIX_VAL_STEP 5
     #define RGB_MATRIX_SPD_STEP 10
 
     // #define DISABLE_RGB_MATRIX_ALPHAS_MODS
@@ -86,8 +88,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define DISABLE_RGB_MATRIX_RAINDROPS
     #define DISABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
 
-    // #define DISABLE_RGB_MATRIX_TYPING_HEATMAP
-    // #define DISABLE_RGB_MATRIX_DIGITAL_RAIN
+    #define DISABLE_RGB_MATRIX_TYPING_HEATMAP
+    #define DISABLE_RGB_MATRIX_DIGITAL_RAIN
 
     #define DISABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
     #define DISABLE_RGB_MATRIX_SOLID_REACTIVE
@@ -103,8 +105,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define DISABLE_RGB_MATRIX_SOLID_SPLASH
     #define DISABLE_RGB_MATRIX_SOLID_MULTISPLASH
 
-    #define RGB_MATRIX_KEYPRESSES  // reacts to keypresses
-    #define RBG_MATRIX_FRAMEBUFFER_EFFECTS
+    // #define RGB_MATRIX_KEYPRESSES  // reacts to keypresses
+    // #define RBG_MATRIX_FRAMEBUFFER_EFFECTS
 
     #define RGB_MATRIX_ANIMATION_SPEED_DEFAULT UINT8_MAX / 2
     #define RGB_MATRIX_ANIMATION_SPEED_SLOW RGB_MATRIX_ANIMATION_SPEED_DEFAULT / 4
@@ -115,9 +117,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OLED_FONT_H "keyboards/crkbd/keymaps/ChristofferNissen/glcdfont.c"
 
 #undef PRODUCT
-#define PRODUCT ChristofferNissens Hacked Corne Keyboard
+#define PRODUCT Christoffer Nissens Hacked Corne Keyboard
 
 #define USB_POLLING_INTERVAL_MS 1
 
 #define RGB_DISABLE_TIMEOUT 0
 #define RGBLIGHT_SLEEP
+
+
+// ChristofferNissen custom
+// #define DANISH
+#define I3UI
+#define UNICODE_SELECTED_MODES UC_LNX
