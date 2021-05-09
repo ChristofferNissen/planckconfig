@@ -1,0 +1,79 @@
+Usefull links:
+emojis: http://www.unicode.org/emoji/charts/full-emoji-list.html#1f427
+conversion: https://r12a.github.io/app-conversion/
+documentation on unicode qmk: https://github.com/qmk/qmk_firmware/blob/master/docs/feature_unicode.md#ucis
+
+// U+1F604 grin
+// U+1F601 beam
+// U+1F605 sweat
+// U+1F602 tears
+// U+1F642 smile
+// U+1F643 upside
+// U+1F609 wink
+// U+1F60A blush
+// U+1F607 halo
+// U+1F972 cry
+
+Conversion done until here
+
+// U+1F618 kiss
+// U+1F618 kissface
+// U+1F60B tongue
+// U+1F92A zany
+// U+1F606 squint
+// U+1F917 hug
+// U+1F92B shush
+// U+1F914 think
+// U+1F928 raised
+// U+1F611 neutral
+// U+1F636 nomouth
+// U+1F60F smirk
+// U+1F612 grim
+// U+1F644 rolling
+// U+1F636 U+200D U+1F32B U+FE0F cloud
+// U+1F634 sleep
+// U+1F637 mask
+// U+1F912 sick
+// U+1F975 hot
+// U+1F976 cold
+// U+1F635 knocked
+// U+1F92F mindblown
+// U+1F974 woozy
+// U+1F973 party
+// U+1F60E sunglasses
+// U+1F913 nerd
+// U+1F9D0 monocle
+
+// face-negative emojis
+
+// face-concerned emojis
+
+// hand gestures
+// U+1F918 rockon
+// U+1F91E fingerscrossed
+// U+1F44C ok
+// U+1F595 fuck
+// U+1F44A knockle
+// U+1F44F clap
+// U+1F91D handshake
+// U+1F64F pray
+// U+270D writing
+// U+1F4AA strong
+// U+1F44D thumbup
+// U+1F44E thumbdown
+
+// animals
+// U+1F427 penguin
+
+// U+1F1E9 U+1F1F0 denmark
+
+// UCIS_SYM("grin", 0x1F600),                 // å
+// UCIS_SYM("beam", 0x1F601),                 // å
+// UCIS_SYM("sweat", 0x1F605),                 // å
+// UCIS_SYM("tears", 0x1F602),                 // å
+// UCIS_SYM("smile", 0x1F642),                 // å
+// UCIS_SYM("upside", 0x1F643),                 // å
+// UCIS_SYM("wink", 0x1F609),                 // å
+// UCIS_SYM("blush", 0x1F60A),                 // å
+// UCIS_SYM("halo", 0x1F607),                 // å
+// UCIS_SYM("cry", 0x1F972),                 // å

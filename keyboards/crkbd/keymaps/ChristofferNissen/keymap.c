@@ -12,10 +12,11 @@ extern rgblight_config_t rgblight_config;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
-#define _ADJUST 3
-#define _I3 4
+#define _DVORAK 1
+#define _LOWER 2
+#define _RAISE 3
+#define _ADJUST 4
+#define _I3 5
 
 #ifdef UNICODEMAP_ENABLE
 enum unicode_names {
@@ -45,6 +46,7 @@ const uint32_t PROGMEM unicode_map[] = {
 // Characters often come in lower and upper case pairs, such as å and Å. To make inputting these characters easier, you can use XP(i, j)
 #endif
 
+
 #ifdef UCIS_ENABLE
 const qk_ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(
     UCIS_SYM("aa", 0x00E5),                   // å
@@ -56,13 +58,68 @@ const qk_ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(
     UCIS_SYM("poop", 0x1F4A9),                // 💩
     UCIS_SYM("rofl", 0x1F923),                // 🤣
     UCIS_SYM("cuba", 0x1F1E8, 0x1F1FA),       // 🇨🇺
-    UCIS_SYM("look", 0x0CA0, 0x005F, 0x0CA0)  // ಠ_ಠ
+    UCIS_SYM("look", 0x0CA0, 0x005F, 0x0CA0),  // ಠ_ಠ
+    UCIS_SYM("coffee", 0x2615),
+    UCIS_SYM("grin", 0x1F604),                 // å
+    // UCIS_SYM("beam", 0x1F601),                 // å
+    // UTCIS_SYM("sweat", 0x1F605),                 // å
+    // UCIS_SYM("tears", 0x1F602),                 // å
+    // UCIS_SYM("smile", 0x1F642),                 // å
+    // UCIS_SYM("upside", 0x1F643),                 // å
+    // UCIS_SYM("wink", 0x1F609),                 // å
+    // UCIS_SYM("blush", 0x1F60A),                 // å
+    // UCIS_SYM("halo", 0x1F607),                 // å
+    UCIS_SYM("cry", 0x1F972)                 // å
+    // UCIS_SYM("kiss", 0x1F618),
+    // UCIS_SYM("tongue", 0x1F60B),
+    // UCIS_SYM("zany", 0x1F92A),
+    // UCIS_SYM("squint", 0x1F606),
+    // UCIS_SYM("hug", 0x1F917),
+    // UCIS_SYM("shush", 0x1F92B),
+    // UCIS_SYM("think", 0x1F914),
+    // UCIS_SYM("raised", 0x1F928),
+    // UCIS_SYM("neutral", 0x1F611),
+    // UCIS_SYM("nomouth", 0x1F636),
+    // UCIS_SYM("smirk", 0x1F60F),
+    // UCIS_SYM("grim", 0x1F612),
+    // UCIS_SYM("rolling", 0x1F644),
+    // UCIS_SYM("cloud", 0x1F636, 0x200D, 0x1F32B, 0xFE0F),
+    // UCIS_SYM("sleep", 0x1F634),
+    // UCIS_SYM("mask", 0x1F637),
+    // UCIS_SYM("sick", 0x1F912),
+    // UCIS_SYM("hot", 0x1F975),
+    // UCIS_SYM("cold", 0x1F976),
+    // UCIS_SYM("knocked", 0x1F92F),
+    // UCIS_SYM("mindblown", 0x1F92F),
+    // UCIS_SYM("woozy", 0x1F974),
+    // UCIS_SYM("party", 0x1F973),
+    // UCIS_SYM("sunglasses", 0x1F60E),
+    // UCIS_SYM("nerd", 0x1F913),
+    // UCIS_SYM("monocle", 0x1F9D0),
+    // UCIS_SYM("rockon", 0x1F918),
+    // UCIS_SYM("fingerscrossed", 0x1F91E),
+    // UCIS_SYM("ok", 0x1F44C),
+    // UCIS_SYM("fuck", 0x1F595),
+    // UCIS_SYM("knockle", 0x1F44A),
+    // UCIS_SYM("clap", 0x1F44F),
+    // UCIS_SYM("handshake", 0x1F91D),
+    // UCIS_SYM("pray", 0x0020, 0x1F64F),
+    // UCIS_SYM("handshake", 0x1F91D),
+    // UCIS_SYM("pray", 0x1F64F),
+    // UCIS_SYM("writing", 0x270D),
+    // UCIS_SYM("strong", 0x1F4AA),
+    // UCIS_SYM("thumbup", 0x1F44D),
+    // UCIS_SYM("thumbdown", 0x1F44E),
+    // UCIS_SYM("penguin", 0x1F427),
+    // UCIS_SYM("dannebrog", 0x1F1E9, 0x1F1F0)
 );
 #endif
 
-
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
+  DVORAK,
+//   DVORAK = SAFE_RANGE,
+//   QWERTY,
   LOWER,
   RAISE,
   ADJUST,
@@ -128,6 +185,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
+  [_DVORAK] = LAYOUT_split_3x6_3( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+       LT(MO(_I3), KC_TAB), KC_QUOT,KC_COMM, KC_DOT, KC_P,   KC_Y,              KC_F,   KC_G,   KC_C,   KC_R,   KC_L, KC_BSPC ,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LCTL, KC_A,   KC_O,   KC_E,   KC_U,   KC_I,              KC_D,   KC_H,   KC_T,   KC_N,   KC_S, KC_SLSH,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+       KC_LSFT,KC_SCLN, KC_Q,   KC_J,   KC_K,   KC_X,              KC_B,   KC_M,   KC_W,   KC_V,   KC_Z, KC_LSFT,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE,  KC_RALT \
+                                      //`--------------------------'  `--------------------------'
+  ),
+
   [_LOWER] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,\
@@ -141,12 +210,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 
-#ifdef UNICODEMAP_ENABLE
+#if defined(UNICODEMAP_ENABLE)
   [_RAISE] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_ESC, XXXXXXX, XXXXXXX, XP(AE, AEBIG), XP(OE, OEBIG), XP(AA, AABIG),                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
+      KC_ESC, DF(_DVORAK), DF(_QWERTY), XP(AE, AEBIG), XP(OE, OEBIG), XP(AA, AABIG),                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -158,7 +227,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_ESC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
+      KC_ESC, DVORAK, QWERTY, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -229,6 +298,9 @@ const char *read_layer_state(void) {
   {
     case _QWERTY:
       strcat(matrix_line_str, "Default");
+      break;
+    case _DVORAK:
+      strcat(matrix_line_str, "Dvorak");
       break;
     case _LOWER:
       strcat(matrix_line_str, "Lower");
@@ -538,7 +610,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // default
     case QWERTY:
       if (record->event.pressed) {
+        layer_on(_QWERTY);
+        layer_off(_DVORAK);
         persistent_default_layer_set(1UL<<_QWERTY);
+      }
+      return false;
+    case DVORAK:
+      if (record->event.pressed) {
+        layer_on(_DVORAK);
+        layer_off(_QWERTY);
+        persistent_default_layer_set(1UL<<_DVORAK);
       }
       return false;
     case LOWER:

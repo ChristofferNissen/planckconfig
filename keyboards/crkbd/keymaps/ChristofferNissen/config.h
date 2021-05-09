@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define USE_SERIAL_PD2
 
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 200
+#define TAPPING_TERM 150
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
@@ -63,16 +63,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGB_MATRIX_VAL_STEP 5
     #define RGB_MATRIX_SPD_STEP 10
 
-    // #define DISABLE_RGB_MATRIX_ALPHAS_MODS
-    // #define DISABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
+    #define DISABLE_RGB_MATRIX_ALPHAS_MODS
+    #define DISABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
     // #define DISABLE_RGB_MATRIX_GRADIENT_UP_DOWN
     // #define DISABLE_RGB_MATRIX_BREATHING
     #define DISABLE_RGB_MATRIX_BAND_SAT
-    // #define DISABLE_RGB_MATRIX_BAND_VAL
+    #define DISABLE_RGB_MATRIX_BAND_VAL
     #define DISABLE_RGB_MATRIX_BAND_PINWHEEL_SAT
-    // #define DISABLE_RGB_MATRIX_BAND_PINWHEEL_VAL
+    #define DISABLE_RGB_MATRIX_BAND_PINWHEEL_VAL
     #define DISABLE_RGB_MATRIX_BAND_SPIRAL_SAT
-    // #define DISABLE_RGB_MATRIX_BAND_SPIRAL_VAL
+    #define DISABLE_RGB_MATRIX_BAND_SPIRAL_VAL
 
     #define DISABLE_RGB_MATRIX_CYCLE_ALL
     #define DISABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
@@ -129,3 +129,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define DANISH
 #define I3UI
 #define UNICODE_SELECTED_MODES UC_LNX
+// #define UCIS_MAX_CODE_POINTS 4
