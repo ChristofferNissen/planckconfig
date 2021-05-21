@@ -7,6 +7,14 @@ extern uint8_t is_master;
 extern rgblight_config_t rgblight_config;
 #endif
 
+void suspend_power_down_user(void) {
+    rgb_matrix_set_suspend_state(true);
+}
+
+void suspend_wakeup_init_user(void) {
+    rgb_matrix_set_suspend_state(false);
+}
+
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -166,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        XXXXXXX, I3_macro1, I3_macro2, I3_macro3, I3_macro4,  I3_macro5, I3_macro6, I3_macro7, I3_macro8, I3_macro9, I3_macro0, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL, KC_MS_BTN1, KC_MS_BTN2, XXXXXXX, XXXXXXX, XXXXXXX,                     KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT, EMOJIKEY, XXXXXXX,\
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+  //|-- ------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, KC_AUDIO_MUTE, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP, KC_MEDIA_PLAY_PAUSE,        KC_MS_LEFT, KC_MS_DOWN, KC_MS_UP, KC_MS_RIGHT, XXXXXXX, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
@@ -175,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       LT(MO(_I3), KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,\
+       LT(MO(_I3), KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, LT(MO(_I3), KC_QUOT),\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -187,11 +195,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_DVORAK] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       LT(MO(_I3), KC_TAB), KC_QUOT,KC_COMM, KC_DOT, KC_P,   KC_Y,              KC_F,   KC_G,   KC_C,   KC_R,   KC_L, KC_BSPC ,\
+       LT(MO(_I3), KC_TAB), KC_QUOT,KC_COMM, KC_DOT, KC_P,   KC_Y,                  KC_F,    KC_G,    KC_C,    KC_R,    KC_L,  KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, KC_A,   KC_O,   KC_E,   KC_U,   KC_I,              KC_D,   KC_H,   KC_T,   KC_N,   KC_S, KC_SLSH,\
+      KC_LCTL, KC_A,   KC_O,   KC_E,   KC_U,   KC_I,                                KC_D,    KC_H,    KC_T,    KC_N,    KC_S,  KC_SLSH,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       KC_LSFT,KC_SCLN, KC_Q,   KC_J,   KC_K,   KC_X,              KC_B,   KC_M,   KC_W,   KC_V,   KC_Z, KC_LSFT,\
+       KC_LSFT,KC_SCLN, KC_Q,   KC_J,   KC_K,   KC_X,                               KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,  KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE,  KC_RALT \
                                       //`--------------------------'  `--------------------------'
@@ -201,9 +209,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_ESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_F6, KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX,\
+      KC_ESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                          KC_F6, KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                      KC_F12, KC_HOME, KC_END, KC_PGUP, KC_PGDN, KC_LSFT,\
+      KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                        KC_F12, KC_HOME, KC_END, KC_PGUP, KC_PGDN, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
                                       //`--------------------------'  `--------------------------'
@@ -215,7 +223,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_ESC, DF(_DVORAK), DF(_QWERTY), XP(AE, AEBIG), XP(OE, OEBIG), XP(AA, AABIG),                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
+      KC_ESC, DVORAK, QWERTY, XP(AE, AEBIG), XP(OE, OEBIG), XP(AA, AABIG),       KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -227,7 +235,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_ESC, DVORAK, QWERTY, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
+      KC_ESC, DVORAK, QWERTY, XXXXXXX, XXXXXXX, XXXXXXX,                         KC_MINS, KC_EQL , KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -240,7 +248,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        RESET,  RGBRST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      RGB_IDL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+        RESET,  RGBRST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      RGB_IDL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_DEL,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_RST, RGB_ENA,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -366,19 +374,31 @@ void matrix_scan_user(void) {
 #endif
 }
 
+// char wpm_str[10];
+
 void matrix_render_user(struct CharacterMatrix *matrix) {
   if (is_master) {
     // If you want to change the display of OLED, you need to change here
     matrix_write_ln(matrix, read_layer_state());
     matrix_write_ln(matrix, read_keylog());
-    matrix_write_ln(matrix, read_usb_state());
-    // matrix_write_ln(matrix, read_keylogs());
+    // matrix_write_ln(matrix, read_usb_state());
+  } else {
 
+    if (strstr(read_usb_state(), "Connected") != NULL ||
+        strstr(read_usb_state(), "Unattached") != NULL
+        ) {
+        // contains
+        matrix_write(matrix, read_logo());
+    } else {
+        matrix_write_ln(matrix, read_usb_state());
+    }
+    // sprintf(wpm_str, "       WPM: %03d", get_current_wpm());
+    // matrix_write_ln(matrix, wpm_str);
+
+    // matrix_write_ln(matrix, read_keylogs());
     // matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
     // matrix_write_ln(matrix, read_host_led_state());
     // matrix_write_ln(matrix, read_timelog());
-  } else {
-    matrix_write(matrix, read_logo());
   }
 }
 
@@ -651,111 +671,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
-
-// #ifdef RGB_MATRIX_ENABLE
-
-// void suspend_power_down_keymap(void) { rgb_matrix_set_suspend_state(true); }
-
-// void suspend_wakeup_init_keymap(void) { rgb_matrix_set_suspend_state(false); }
-
-// void rgb_matrix_layer_helper(uint8_t hue, uint8_t sat, uint8_t val, uint8_t led_type) {
-//     HSV hsv = {hue, sat, val};
-//     if (hsv.v > rgb_matrix_config.hsv.v) {
-//         hsv.v = rgb_matrix_config.hsv.v;
-//     }
-
-//     RGB rgb = hsv_to_rgb(hsv);
-//     for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) {
-//         if (HAS_FLAGS(g_led_config.flags[i], led_type)) {
-//             rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
-//         }
-//     }
-// }
-
-// void check_default_layer(uint8_t mode, uint8_t type) {
-//     switch (get_highest_layer(default_layer_state)) {
-//       default: {
-//             rgb_matrix_set_color_all(0, 0,0);
-//             break;
-//         }
-//     }
-// }
-
-// void rgb_matrix_indicators_user(void) {
-
-//     switch (get_highest_layer(layer_state)) {
-//         case _QWERTY:
-//             // rgb_matrix_set_color_all(0, 255, 255); //Light up all the keys in blue
-//             rgb_matrix_enable();
-//             break;
-
-//         case _ADJUST:
-//             // should only be flashed to left side
-//             rgb_matrix_disable();
-//             rgb_matrix_set_color_all(0, 0,0);
-
-//             // Row 2
-//             rgb_matrix_set_color(16, 255, 255, 0);
-//             rgb_matrix_set_color(19, 255, 255, 0);
-//             rgb_matrix_set_color(22, 255, 255, 0);
-//             rgb_matrix_set_color(23, 255, 255, 0);
-
-//             // Row 3
-//             rgb_matrix_set_color(12, 0, 255, 255);
-//             rgb_matrix_set_color(15, 0, 255, 255);
-//             rgb_matrix_set_color(20, 0, 255, 255);
-//             rgb_matrix_set_color(21, 0, 255, 255);
-//             rgb_matrix_set_color(26, 0, 255, 255);
-//             break;
-
-//         case _LOWER:
-//             rgb_matrix_disable();
-//             rgb_matrix_set_color_all(0, 0,0);
-
-//             // Arrow keys
-//             rgb_matrix_set_color(11, 255, 0, 0);
-//             rgb_matrix_set_color(16, 255, 0, 0);
-//             rgb_matrix_set_color(19, 255, 0, 0);
-//             rgb_matrix_set_color(22, 255, 0, 0);
-
-//             // Mouse keys
-//             rgb_matrix_set_color(12, 255, 0, 255);
-//             rgb_matrix_set_color(15, 255, 0, 255);
-//             rgb_matrix_set_color(20, 255, 0, 255);
-//             rgb_matrix_set_color(21, 255, 0, 255);
-//             break;
-
-//         case _RAISE:
-//             rgb_matrix_disable();
-//             rgb_matrix_set_color_all(0,0,0); // rest of keys
-//             rgb_matrix_set_color(1, 0, 100, 255);
-//             // rgb_matrix_set_color(81, 0, 100, 255);
-//             // rgb_matrix_set_color(62, 255, 0, 100);
-//             rgb_matrix_set_color(50, 255, 0, 100);
-//             rgb_matrix_set_color(51, 255, 0, 100);
-//             rgb_matrix_set_color(52, 255, 0, 100);
-//             rgb_matrix_set_color(53, 255, 0, 100);
-//             break;
-
-//         case _I3:
-//             // should only be flashed to right side
-//             rgb_matrix_disable();
-//             rgb_matrix_set_color_all(0,0,0); // rest of keys
-//             rgb_matrix_set_color(9, 0, 100, 255);
-//             rgb_matrix_set_color(10, 0, 100, 255);
-//             rgb_matrix_set_color(17, 0, 100, 255);
-//             rgb_matrix_set_color(18, 0, 100, 255);
-//             rgb_matrix_set_color(23, 0, 100, 255);
-//             rgb_matrix_set_color(26, 255, 100, 0);
-//             break;
-
-//         default: {
-//             check_default_layer(IS_LAYER_ON(_ADJUST), LED_FLAG_UNDERGLOW);
-//             break;
-//         }
-//     }
-
-//     check_default_layer(0, LED_FLAG_MODIFIER);
-
-// }
-// #endif

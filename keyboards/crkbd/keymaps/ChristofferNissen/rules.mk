@@ -3,13 +3,15 @@
 SRC +=	./lib/rgb_state_reader.c \
         ./lib/logo_reader.c \
         ./lib/keylogger.c \
+        # ./lib/timelogger.c \
         # ./lib/layer_state_reader.c \
         # ./lib/mode_icon_reader.c \
         # ./lib/host_led_state_reader.c \
-        # ./lib/timelogger.c \
 		# ./lib/glcdfont.c \
 
 BOOTLOADER       = qmk-dfu
+
+WPM_ENABLE = yes
 
 RAW_ENABLE = yes
 # WAIT_FOR_USB = yes
@@ -33,6 +35,7 @@ SWAP_HANDS_ENABLE = no      # Enable one-hand typing
 RGB_MATRIX_ENABLE = WS2812
 OLED_DRIVER_ENABLE      = yes
 
+
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
-SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
+SLEEP_LED_ENABLE = yes    # Breathing sleep LED during USB suspend
 SPLIT_KEYBOARD = no

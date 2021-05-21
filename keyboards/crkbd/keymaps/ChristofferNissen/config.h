@@ -88,9 +88,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define DISABLE_RGB_MATRIX_RAINDROPS
     #define DISABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
 
-    #define DISABLE_RGB_MATRIX_TYPING_HEATMAP
-    #define DISABLE_RGB_MATRIX_DIGITAL_RAIN
-
     #define DISABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
     #define DISABLE_RGB_MATRIX_SOLID_REACTIVE
     #define DISABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
@@ -107,10 +104,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     // #define RGB_MATRIX_KEYPRESSES  // reacts to keypresses
     // #define RBG_MATRIX_FRAMEBUFFER_EFFECTS
+    // #define RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS 50
+    #define DISABLE_RGB_MATRIX_TYPING_HEATMAP
+    #define DISABLE_RGB_MATRIX_DIGITAL_RAIN
 
     #define RGB_MATRIX_ANIMATION_SPEED_DEFAULT UINT8_MAX / 2
     #define RGB_MATRIX_ANIMATION_SPEED_SLOW RGB_MATRIX_ANIMATION_SPEED_DEFAULT / 4
     #define RGB_MATRIX_ANIMATION_SPEED_SLOWER RGB_MATRIX_ANIMATION_SPEED_SLOW / 3
+
 #endif
 
 #define OLED_DISABLE_TIMEOUT
@@ -121,7 +122,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USB_POLLING_INTERVAL_MS 1
 
-#define RGB_DISABLE_TIMEOUT 0
+// #define RGB_DISABLE_TIMEOUT
 #define RGBLIGHT_SLEEP
 
 
