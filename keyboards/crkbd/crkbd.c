@@ -8,7 +8,6 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 #endif
 }
 
-
 void suspend_power_down_kb(void) {
     rgb_matrix_set_suspend_state(true);
     suspend_power_down_user();

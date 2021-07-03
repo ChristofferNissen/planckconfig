@@ -11,7 +11,7 @@ SRC +=	./lib/rgb_state_reader.c \
 
 BOOTLOADER       = qmk-dfu
 
-WPM_ENABLE = yes
+# WPM_ENABLE = yes
 
 RAW_ENABLE = yes
 # WAIT_FOR_USB = yes
@@ -32,10 +32,15 @@ UCIS_ENABLE = yes           # Unicode with modifier key and translation
 BLUETOOTH_ENABLE = no       # Enable Bluetooth with the Adafruit EZ-Key HID
 RGBLIGHT_ENABLE = no        # Enable WS2812 RGB underlight.
 SWAP_HANDS_ENABLE = no      # Enable one-hand typing
+RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_ENABLE = WS2812
 OLED_DRIVER_ENABLE      = yes
 
 
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
-SLEEP_LED_ENABLE = yes    # Breathing sleep LED during USB suspend
-SPLIT_KEYBOARD = no
+# SLEEP_LED_ENABLE = yes    # Breathing sleep LED during USB suspend
+# SPLIT_KEYBOARD = no
+# SPLIT_KEYBOARD = yes
+
+LED_MIRRORED            = no
+IOS_DEVICE_ENABLE       = no

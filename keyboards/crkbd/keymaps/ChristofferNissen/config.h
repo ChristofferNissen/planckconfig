@@ -31,18 +31,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // sudo util/docker_build.sh crkbd:ChristofferNissen:dfu-split-left
 
 #define SSD1306OLED
-// #undef USE_I2C
-// #undef SSD1306OLED
-
+#define USE_I2C
 #define USE_SERIAL_PD2
 
 #define TAPPING_FORCE_HOLD
 #define TAPPING_TERM 150
 
 #ifdef RGBLIGHT_ENABLE
-    #undef RGBLED_NUM
+    // #undef RGBLED_NUM
     #define RGBLIGHT_ANIMATIONS
-    #define RGBLED_NUM 27
+    // #define RGBLED_NUM 27
     #define RGBLIGHT_LIMIT_VAL 120
     #define RGBLIGHT_HUE_STEP 10
     #define RGBLIGHT_SAT_STEP 17
@@ -53,6 +51,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define FORCE_NKRO
 
 #ifdef RGB_MATRIX_ENABLE
+    #define RGB_MATRIX_SPLIT { 27, 27 }
+
     #define RGB_DISABLE_WHEN_USB_SUSPENDED true  // turn off effects when suspended
     #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 175
     #define RGB_MATRIX_STARTUP_VAL 75
@@ -123,11 +123,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define USB_POLLING_INTERVAL_MS 1
 
 // #define RGB_DISABLE_TIMEOUT
-#define RGBLIGHT_SLEEP
+// #define RGBLIGHT_SLEEP
 
+
+#define RGBLIGHT_SPLIT
 
 // ChristofferNissen custom
 // #define DANISH
 #define I3UI
 #define UNICODE_SELECTED_MODES UC_LNX
-// #define UCIS_MAX_CODE_POINTS 4
