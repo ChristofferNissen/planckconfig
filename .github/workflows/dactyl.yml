@@ -2,10 +2,8 @@ name: CLI CI
 
 on:
   push:
-    branches:
-    - master
     paths:
-    - keyboards/handwired/dactyl_manuform/
+    - 'keyboards/handwired/dactyl_manuform/**'
 
 jobs:
   test:
