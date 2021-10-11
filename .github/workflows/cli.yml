@@ -23,4 +23,6 @@ jobs:
     # - name: Install dependencies
     #   run: pip3 install -r requirements.txt
     - name: Test Dactyl
-      run: util/docker_build.sh handwired/dactyl_manuform/4x5:ChristofferNissen
+      shell: 'script --return --quiet --command "bash {0}"'
+      run: |
+        util/docker_build.sh handwired/dactyl_manuform/4x5:ChristofferNissen
