@@ -22,16 +22,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Use I2C or Serial, not both */
 #define USE_SERIAL
-//#define USE_I2C
+// #define USE_I2C
 
 /* Select hand configuration */
 //#define MASTER_LEFT
 //#define MASTER_RIGHT
-
 #define EE_HANDS
 
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 150
+#define TAPPING_TERM 175
 
 #undef FORCE_NKRO
 #define FORCE_NKRO
@@ -42,11 +41,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT Christoffer Nissens Hacked Dactyl Manuform
 
 #define UNICODE_SELECTED_MODES UC_LNX
-
-// ChristofferNissen custom
-// #define I3UI
-
-
 
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
@@ -60,6 +54,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Other settings //
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
+#define TAPPING_FORCE_HOLD
+
+// Apply the modifier on keys that are tapped during a short hold of a modtap
+#define PERMISSIVE_HOLD
+
 
 // Save firmware space
 #ifndef NO_DEBUG
