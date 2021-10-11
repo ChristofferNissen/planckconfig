@@ -15,14 +15,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    container: qmkfm/base_container
-
+    # container: qmkfm/base_container
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Install dependencies
-      run: pip3 install -r requirements.txt
-    - name: Run tests
-      run: bin/qmk pytest
+    # - name: Install dependencies
+    #   run: pip3 install -r requirements.txt
+    - name: Test Dactyl
+      run: util/docker_build.sh handwired/dactyl_manuform/4x5:ChristofferNissen

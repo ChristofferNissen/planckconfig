@@ -61,4 +61,4 @@ docker run --rm -it $usb_args \
 	-e SKIP_GIT="$SKIP_GIT" \
 	-e MAKEFLAGS="$MAKEFLAGS" \
 	qmkfm/base_container \
-	make "$keyboard${keymap:+:$keymap}${target:+:$target}"
+	make  "$keyboard${keymap:+:$keymap}${target:+:$target}"
