@@ -1,0 +1,20 @@
+name: CLI CI
+
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - keyboards/crkbd
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Test CRKBD
+      shell: 'script --return --quiet --command "bash {0}"'
+      run: |
+        util/docker_build.sh crkbd:ChristofferNissen
