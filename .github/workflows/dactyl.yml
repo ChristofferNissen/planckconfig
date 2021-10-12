@@ -1,9 +1,9 @@
-name: CLI CI
+name: Dactyl CI
 
 on:
   push:
     paths:
-    - 'keyboards/handwired/dactyl_manuform/**'
+      - 'keyboards/handwired/dactyl_manuform/**'
 
 jobs:
   test:
