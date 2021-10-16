@@ -89,8 +89,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                    '------+------' '------+------'
      */
     [_LOWER] = LAYOUT(
-        KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,
-        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, _______,                                    _______, KC_RCTL, KC_RSFT, KC_LALT, KC_RGUI,
+        _______, _______, _______, _______, _______,                                       _______, _______, _______, _______, _______,
+        MT(MOD_LGUI, KC_1), MT(MOD_LALT, KC_2), MT(MOD_LSFT, KC_3), MT(MOD_LCTL, KC_4), KC_5,                                    KC_6, MT(MOD_RCTL, KC_7), MT(MOD_RSFT, KC_8), MT(MOD_LALT, KC_9), MT(MOD_RGUI, KC_0),
         _______, _______, _______, _______, _______,                                    _______, _______, _______, _______, _______,
                  _______, _______,                                                                          _______,  _______,
                                                      _______, _______,  _______, _______,
@@ -117,9 +117,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                    '------+------' '------+------'
      */
     [_RAISE] = LAYOUT(
+        _______, _______, _______, _______, EMOJIKEY,                                  _______, _______, _______, _______, _______,
         KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                    KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
-        KC_TILDE, KC_SLSH, KC_BSLS, KC_PIPE, KC_QUES,                                   KC_UNDS, KC_MINS, KC_PLUS, KC_EQL, KC_PIPE,
-        _______, _______, _______, _______, EMOJIKEY,                                  _______, _______, _______, _______, KC_GRV,
+        KC_TILDE, KC_SLSH, KC_BSLS, KC_PIPE, KC_GRV,                                   KC_UNDS, KC_MINS, KC_PLUS, KC_EQL, KC_PIPE,
                  _______,  _______,                                                                           _______, _______,
                                    _______, _______,                                      _______, _______,
                                                      _______, LOWER,  RAISE, _______,
