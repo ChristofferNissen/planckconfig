@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define USE_SERIAL_PD2
 
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 150
+#define TAPPING_TERM 175
 
 #ifdef RGBLIGHT_ENABLE
     // #undef RGBLED_NUM
@@ -132,3 +132,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define DANISH
 #define I3UI
 #define UNICODE_SELECTED_MODES UC_LNX
+
+
+
+// Prevent normal rollover on alphas from accidentally triggering mods.
+#define IGNORE_MOD_TAP_INTERRUPT
+
+// This prevents accidental repeats of the tap-hold keys when typing quickly.
+#define TAPPING_FORCE_HOLD_PER_KEY
+
+// Other settings //
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
+// Other settings //
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
+#define TAPPING_FORCE_HOLD
+
+// Apply the modifier on keys that are tapped during a short hold of a modtap
+#define PERMISSIVE_HOLD
+
+
+// Shamelessly stolen mouse key settings from @pierrechevalier83 //
+
+// Set the mouse settings to a comfortable speed/accuracy trade-off
+// Assume the screen refresh rate is 60 Hz or higher
+// The default is 50. This makes the mouse ~3 times faster and more accurate
+// #undef to override default settings
+#undef MOUSEKEY_INTERVAL
+#define MOUSEKEY_INTERVAL 16
+// The default is 20. Since we made the mouse about 3 times faster with the previous setting,
+// give it more time to accelerate to max speed to retain precise control over short distances.
+#undef MOUSEKEY_TIME_TO_MAX
+#define MOUSEKEY_TIME_TO_MAX 40
+// The default is 300. Let's try and make this as low as possible while keeping the cursor responsive
+#undef MOUSEKEY_DELAY
+#define MOUSEKEY_DELAY 100

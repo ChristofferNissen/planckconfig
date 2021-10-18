@@ -1,4 +1,6 @@
 #include QMK_KEYBOARD_H
+#include "process_ucis.h"
+
 // #ifdef PROTOCOL_LUFA
 //   #include "lufa.h"
 //   #include "split_util.h"
@@ -36,6 +38,9 @@ extern rgblight_config_t rgblight_config;
 #define _ADJUST 6
 #define _I3 7
 
+#define RAISE MO(_RAISE)
+#define LOWER MO(_LOWER)
+
 #ifdef UNICODEMAP_ENABLE
 enum unicode_names {
     AE,
@@ -52,10 +57,10 @@ enum unicode_names {
 const uint32_t PROGMEM unicode_map[] = {
     [AE] = 0x00E6, // æ
     [AEBIG] = 0x00C6, // Æ
-    [OE] = 0x00E6, // ø
-    [OEBIG] = 0x00C6, // Ø
-    [AA] = 0x00E6, // å
-    [AABIG] = 0x00C6, // Å
+    [OE] = 0x00F8, // ø
+    [OEBIG] = 0x00D8, // Ø
+    [AA] = 0x00E5, // å
+    [AABIG] = 0x00C5, // Å
     [BANG]  = 0x203D,  // ‽
     [IRONY] = 0x2E2E,  // ⸮
     [SNEK]  = 0x1F40D, // 🐍
@@ -63,6 +68,7 @@ const uint32_t PROGMEM unicode_map[] = {
 // Then you can use X(SNEK) etc. in your keymap.
 // Characters often come in lower and upper case pairs, such as å and Å. To make inputting these characters easier, you can use XP(i, j)
 #endif
+
 
 
 #ifdef UCIS_ENABLE
@@ -73,12 +79,9 @@ const qk_ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(
     UCIS_SYM("aeb", 0x00C6),                  // Æ
     UCIS_SYM("oe", 0x00F8),                   // ø
     UCIS_SYM("oeb", 0x00D8),                  // Ø
-    UCIS_SYM("poop", 0x1F4A9),                // 💩
-    UCIS_SYM("rofl", 0x1F923),                // 🤣
-    UCIS_SYM("cuba", 0x1F1E8, 0x1F1FA),       // 🇨🇺
-    UCIS_SYM("look", 0x0CA0, 0x005F, 0x0CA0),  // ಠ_ಠ
-    UCIS_SYM("coffee", 0x2615),
-    UCIS_SYM("grin", 0x1F604),                 // å
+    UCIS_SYM("poop", 0x1F4A9)                // 💩
+    // UCIS_SYM("rofl", 0x1F923),                // 🤣
+    // UCIS_SYM("cuba", 0x1F1E8, 0x1F1FA),       // 🇨🇺
     // UCIS_SYM("beam", 0x1F601),                 // å
     // UTCIS_SYM("sweat", 0x1F605),                 // å
     // UCIS_SYM("tears", 0x1F602),                 // å
@@ -87,7 +90,7 @@ const qk_ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(
     // UCIS_SYM("wink", 0x1F609),                 // å
     // UCIS_SYM("blush", 0x1F60A),                 // å
     // UCIS_SYM("halo", 0x1F607),                 // å
-    UCIS_SYM("cry", 0x1F972)                 // å
+    // UCIS_SYM("cry", 0x1F972)                 // å
     // UCIS_SYM("kiss", 0x1F618),
     // UCIS_SYM("tongue", 0x1F60B),
     // UCIS_SYM("zany", 0x1F92A),
@@ -137,9 +140,9 @@ enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   DVORAK,
   CSGO,
-  LOWER,
+//   LOWER,
   LOWERLITE,
-  RAISE,
+//   RAISE,
   ADJUST,
   BACKLIT,
   RGBRST,
@@ -183,23 +186,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        XXXXXXX, I3_macro1, I3_macro2, I3_macro3, I3_macro4,  I3_macro5, I3_macro6, I3_macro7, I3_macro8, I3_macro9, I3_macro0, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, KC_MS_BTN1, KC_MS_BTN2, XXXXXXX, XXXXXXX, XXXXXXX,                     KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT, EMOJIKEY, XXXXXXX,\
+      XXXXXXX, KC_MS_BTN1, KC_MS_BTN2, XXXXXXX, XXXXXXX, XXXXXXX,                     KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,\
   //|-- ------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, KC_AUDIO_MUTE, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP, KC_MEDIA_PLAY_PAUSE,        KC_MS_LEFT, KC_MS_DOWN, KC_MS_UP, KC_MS_RIGHT, XXXXXXX, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
+                                         XXXXXXX,   LT(LOWER, KC_TAB),   KC_SPC,   KC_BSPC,   LT(RAISE, KC_ENT), XXXXXXX \
                                       //`--------------------------'  `--------------------------'
     ),
 
   [_QWERTY] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       LT(MO(_I3), KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,\
+       I3,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  I3,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, LT(MO(_I3), KC_QUOT),\
+      XXXXXXX,    MT(MOD_LGUI, KC_A), MT(MOD_LALT, KC_S), MT(MOD_LSFT, KC_D), MT(MOD_LCTL, KC_F),    KC_G,                         KC_H,    MT(MOD_RCTL, KC_J), MT(MOD_RSFT, KC_K), MT(MOD_LALT, KC_L), MT(MOD_RGUI, KC_SCLN), XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LSFT,\
+      XXXXXXX,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE,  KC_RALT \
+                                          KC_ESC,   LT(LOWER, KC_TAB),   KC_SPC,   KC_BSPC,   LT(RAISE, KC_ENT), KC_QUOT \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -211,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_LSFT,KC_SCLN, KC_Q,   KC_J,   KC_K,   KC_X,                               KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,  KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE,  KC_RALT \
+                                          KC_ESC,   LT(_LOWER, KC_TAB),   KC_SPC,   KC_BSPC,   LT(_RAISE, KC_ENT), KC_QUOT \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -223,43 +226,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_RALT,   LOWERLITE,   KC_SPC,   KC_ENT,   RAISE,  KC_LGUI \
+                                          LOWER,   KC_TAB,   KC_SPC,   KC_BSPC,   KC_ENT,  RAISE \
                                       //`--------------------------'  `--------------------------'
   ),
 
   [_LOWER] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,\
+       XXXXXXX,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_ESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                          KC_F6, KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                        KC_F12, KC_HOME, KC_END, KC_PGUP, KC_PGDN, KC_LSFT,\
+      XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                        KC_F12, KC_HOME, KC_END, KC_PGUP, KC_PGDN, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
+                            KC_ESC, LOWER,   KC_SPC,   KC_BSPC, RAISE, KC_QUOT \
                                       //`--------------------------'  `--------------------------'
     ),
 
   [_LOWERLITE] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,\
+       XXXXXXX,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_ESC,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      XXXXXXX, KC_LEFT, KC_DOWN, KC_UP  ,KC_RIGHT, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      XXXXXXX, KC_HOME, KC_END , KC_PGUP, KC_PGDN, KC_LSFT,\
+      XXXXXXX,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      XXXXXXX, KC_HOME, KC_END , KC_PGUP, KC_PGDN, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,LOWERLITE, KC_SPC,     KC_ENT,   RAISE, KC_RALT \
+                                          LOWER,   KC_TAB,   KC_SPC,   KC_BSPC,   KC_ENT,  RAISE \
                                       //`--------------------------'  `--------------------------'
     ),
 
   [_RAISE] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,\
+       XXXXXXX, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, XP(AA, AABIG),\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_ESC, DVORAK, QWERTY, CSGO, XXXXXXX, XXXXXXX,                            KC_MINS, KC_EQL , KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
+  //   KC_ESC, DVORAK, QWERTY, CSGO, XXXXXXX, XXXXXXX,                            KC_MINS, KC_EQL , KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,
+      KC_ESC, KC_TILDE, KC_SLSH, KC_BSLS, KC_PIPE, KC_GRV,                            KC_MINS, KC_EQL , KC_LCBR, KC_RCBR, XP(AE, AEBIG),  XP(OE, OEBIG),\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
+                                KC_ESC,  LOWER,   KC_SPC,   KC_BSPC,   RAISE, KC_QUOT \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -271,7 +275,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_RMOD, RGB_DIS,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,   LOWER,   KC_SPC,   KC_ENT,   RAISE, KC_RALT \
+                                KC_ESC,   LOWER,   KC_SPC,   KC_BSPC,   RAISE, KC_QUOT \
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -458,78 +462,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 #endif
 
-#if defined(DANISH) && defined(UNICODE_ENABLE)
-    default:
-        is_a_active = false;
-        is_o_active = false;
-        break;
-
-    case KC_LSFT:
-        // true when pressed down, false on release
-        if (record->event.pressed) {
-            is_shift_active = true;
-        } else {
-            is_shift_active = false;
-        }
-        break;
-
-    case KC_E:
-      if (record->event.pressed) {
-        // a+e = æ   Shift+a+e = Æ
-        if (is_a_active) {
-            if (is_shift_active) {
-                tap_code(KC_BSPC);
-                // UC(0x00C6);
-                // SEND_STRING(SS_LALT("D83D+DC83"));
-                // send_unicode_hex_string("00C6");
-            } else {
-                tap_code(KC_BSPC);
-                // UC(0x00E6);
-                // send_unicode_hex_string("00E6");
-            }
-          is_a_active = false;
-          break;
-        }
-
-        // OE = ø       Shift+OE = Ø
-        if (is_o_active) {
-            if (is_shift_active)
-                SEND_STRING("Æ");
-            else
-                SEND_STRING("æ");
-          is_o_active = false;
-        }
-      }
-      break;
-
-    // A+A = å   Shift+A+A = Å
-    case KC_A:
-      if (record->event.pressed) {
-        if (is_a_active) {
-            if (is_shift_active)
-                SEND_STRING("Å");
-            else
-                SEND_STRING("å");
-
-          is_a_active = false;
-
-        } else {
-            is_a_active = true;
-            a_timer = timer_read();
-        }
-      }
-      break;
-
-    case KC_O:
-      if (record->event.pressed) {
-        if (!is_o_active) {
-            is_o_active = true;
-            o_timer = timer_read();
-        }
-      }
-      break;
-#endif
-
 #ifdef I3UI
     case I3:
         if (record->event.pressed) {
@@ -714,30 +646,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void rgb_matrix_indicators_user(void) {
     if(rgb_matrix_config.enable) {
         if(IS_LAYER_ON(_ADJUST)) {
-            rgb_matrix_set_color_all(0,0,0);
+            // rgb_matrix_set_color_all(0,0,0);
             // rgb_matrix_set_color(0, 0, 0, 0);
             // rgb_matrix_set_color(1, 0, 0, 0);
             // rgb_matrix_set_color(2, 0, 0, 0);
             rgb_matrix_set_color(13, 10, 10, 10);
 
-        } else if (IS_LAYER_ON(_LOWER)){
-            rgb_matrix_set_color(0, 50, 50, 50);
-            rgb_matrix_set_color(1, 50, 50, 50);
-            rgb_matrix_set_color(2, 50, 50, 50);
-            // rgb_matrix_set_color(3, 255, 255, 255);
-            // rgb_matrix_set_color(4, 255, 255, 255);
-            // rgb_matrix_set_color(5, 255, 255, 255);
-        } else if (IS_LAYER_ON(_RAISE)){
-            rgb_matrix_set_color(0, 113, 125, 213);
-            rgb_matrix_set_color(1, 113, 125, 213);
-            rgb_matrix_set_color(2, 113, 125, 213);
-        } else if (IS_LAYER_ON(_I3)){
-            rgb_matrix_set_color_all(0,0,0);
-            rgb_matrix_set_color(9, 255, 255, 255);
-            rgb_matrix_set_color(10, 255, 255, 255);
-            rgb_matrix_set_color(17, 255, 255, 255);
-            rgb_matrix_set_color(18, 255, 255, 255);
-            rgb_matrix_set_color(23, 255, 255, 255);
+        // } else if (IS_LAYER_ON(_LOWER)){
+        // } else if (IS_LAYER_ON(_RAISE)){
+        // } else if (IS_LAYER_ON(_I3)){
+        //     rgb_matrix_set_color_all(0,0,0);
+        //     rgb_matrix_set_color(9, 255, 255, 255);
+        //     rgb_matrix_set_color(10, 255, 255, 255);
+        //     rgb_matrix_set_color(17, 255, 255, 255);
+        //     rgb_matrix_set_color(18, 255, 255, 255);
+        //     rgb_matrix_set_color(23, 255, 255, 255);
 
         } else if (IS_LAYER_ON(_CSGO)){
             // rgb_matrix_set_color_all(0,0,0);

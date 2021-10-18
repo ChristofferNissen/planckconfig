@@ -1,11 +1,9 @@
-name: CLI CI
+name: CRKBD CI
 
 on:
   push:
-    branches:
-    - master
     paths:
-    - keyboards/crkbd
+    - 'keyboards/crkbd/**'
 
 jobs:
   test:
