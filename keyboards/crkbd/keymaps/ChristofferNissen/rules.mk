@@ -18,7 +18,7 @@ RAW_ENABLE = yes
 LTO_ENABLE = yes
 
 BOOTMAGIC_ENABLE = no       # Virtual DIP switch configuration(+1000)
-MOUSEKEY_ENABLE = no        # Mouse keys(+4700)
+MOUSEKEY_ENABLE = yes        # Mouse keys(+4700)
 EXTRAKEY_ENABLE = yes       # Audio control and System control(+450)
 CONSOLE_ENABLE = no         # Console for debug(+400)
 COMMAND_ENABLE = no         # Commands for debug and configuration
@@ -34,7 +34,7 @@ RGBLIGHT_ENABLE = no        # Enable WS2812 RGB underlight.
 SWAP_HANDS_ENABLE = no      # Enable one-hand typing
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_ENABLE = WS2812
-OLED_DRIVER_ENABLE      = yes
+OLED_DRIVER_ENABLE = yes
 
 
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE

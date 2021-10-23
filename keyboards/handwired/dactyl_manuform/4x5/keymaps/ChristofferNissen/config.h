@@ -85,3 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // The default is 300. Let's try and make this as low as possible while keeping the cursor responsive
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY 100
+
+
+
+#define TAPPING_TOGGLE 3
