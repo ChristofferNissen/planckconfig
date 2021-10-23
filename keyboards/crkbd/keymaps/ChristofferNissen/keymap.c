@@ -522,7 +522,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-#ifndef CUSTOM_RGB
+#ifdef CUSTOM_RGB
 void rgb_matrix_indicators_user(void) {
     if(rgb_matrix_config.enable) {
         if(IS_LAYER_ON(_ADJUST)) {
