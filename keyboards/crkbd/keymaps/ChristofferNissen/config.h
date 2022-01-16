@@ -118,7 +118,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OLED_FONT_H "keyboards/crkbd/keymaps/ChristofferNissen/glcdfont.c"
 
 #undef PRODUCT
-#define PRODUCT Christoffer Nissens Hacked Corne Keyboard
+#define PRODUCT Awesome Corne Keyboard
 
 #define USB_POLLING_INTERVAL_MS 1
 

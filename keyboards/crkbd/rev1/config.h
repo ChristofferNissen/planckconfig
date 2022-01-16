@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x3060
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    foostan
+#define MANUFACTURER    Christoffer Nissens
 #define PRODUCT         Corne Keyboard (crkbd)
 #define DESCRIPTION     A split keyboard with 3x6 vertically staggered keys and 3 thumb keys
 

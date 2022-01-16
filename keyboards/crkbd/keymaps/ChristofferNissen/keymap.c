@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "process_ucis.h"
+// #include "process_ucis.h"
 
 extern uint8_t is_master;
 
@@ -30,7 +30,7 @@ extern rgblight_config_t rgblight_config;
 #define MOUSEL TT(_MOUSEL)
 #define MOUSER TT(_MOUSER)
 #define ARROW MO(_ARROW)
-#define ENABLE_LT TG(_BASE)
+#define ENABLE_LT TT(_BASE)
 #define EMOJI MO(_EMOJI)
 
 #ifdef UNICODEMAP_ENABLE
@@ -109,9 +109,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, I3_macro1, I3_macro2, I3_macro3, I3_macro4,  I3_macro5, I3_macro6, I3_macro7, I3_macro8, I3_macro9, I3_macro0, XXXXXXX,\
+      KC_LSFT, I3_macro1, I3_macro2, I3_macro3, I3_macro4,  I3_macro5, I3_macro6, I3_macro7, I3_macro8, I3_macro9, I3_macro0, KC_LSFT,\
   //|-- ------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX,                     XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT, XXXXXXX,\
+      KC_LSFT, XXXXXXX, XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX,                     XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT, KC_LSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          KC_ESC,   KC_TAB, LT(LOWER, KC_SPC),   LT(RAISE, KC_BSPC), KC_ENT, KC_QUOT \
                                       //`--------------------------'  `--------------------------'
@@ -119,35 +119,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MOUSEL] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       MOUSEL, XXXXXXX,KC_MS_BTN1, KC_MS_BTN2, XXXXXXX, XXXXXXX,                     KC_WH_U, KC_WH_L, KC_MS_UP, KC_WH_R, XXXXXXX, XXXXXXX,\
+       MOUSEL, XXXXXXX, XXXXXXX, KC_MS_BTN1, KC_MS_BTN2, XXXXXXX,                     KC_WH_U, KC_WH_L, KC_MS_UP, KC_WH_R, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     KC_WH_D, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       XXXXXXX,XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     XXXXXXX, KC_MS_BTN1, XXXXXXX, KC_MS_BTN2, XXXXXXX, XXXXXXX,\
+       MOUSEL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     XXXXXXX, KC_MS_BTN1, XXXXXXX, KC_MS_BTN2, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_ESC,   LT(_LOWER, KC_TAB),   KC_SPC,   KC_BSPC,   LT(_RAISE, KC_ENT), KC_QUOT \
+                                        XXXXXXX, KC_MS_BTN2, KC_MS_BTN1,      KC_MS_BTN1, KC_MS_BTN2, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
   ),
 
   [_MOUSER] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       XXXXXXX, XXXXXXX, KC_WH_L, KC_MS_UP, KC_WH_R, KC_WH_U,               XXXXXXX, XXXXXXX, KC_MS_BTN1, KC_MS_BTN2, XXXXXXX, MOUSER,\
+       XXXXXXX, XXXXXXX, KC_WH_L, KC_MS_UP, KC_WH_R, KC_WH_U,               XXXXXXX, KC_MS_BTN1, KC_MS_BTN2, XXXXXXX, XXXXXXX, MOUSER,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        XXXXXXX, XXXXXXX, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_WH_D,                    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       XXXXXXX,XXXXXXX, KC_MS_BTN1, XXXXXXX, KC_MS_BTN2, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+       XXXXXXX,XXXXXXX, KC_MS_BTN1, XXXXXXX, KC_MS_BTN2, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MOUSER,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_ESC,   LT(_LOWER, KC_TAB),   KC_SPC,   KC_BSPC,   LT(_RAISE, KC_ENT), KC_QUOT \
+                                        XXXXXXX, KC_MS_BTN2, KC_MS_BTN1,      KC_MS_BTN1, KC_MS_BTN1, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
   ),
 
   [_BASE] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       MOUSEL,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,   KC_P, MOUSER ,\
+       ENABLE_LT,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,   KC_P, MOUSER ,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         I3,    KC_A,  KC_S,  KC_D, KC_F, KC_G,                                 KC_H, KC_J, KC_K, KC_L, KC_SCLN, I3,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        ENABLE_LT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, XXXXXXX,\
+        MOUSEL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, MOUSER,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         KC_ESC, KC_TAB, LT(LOWER, KC_SPC),    LT(RAISE, KC_BSPC), KC_ENT, KC_QUOT \
                                       //`--------------------------'  `--------------------------'
@@ -155,13 +155,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        MOUSEL,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  MOUSER,\
+        ENABLE_LT,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  MOUSER,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         I3,    MT(MOD_LGUI, KC_A), MT(MOD_LALT, KC_S), MT(MOD_LSFT, KC_D), MT(MOD_LCTL, KC_F),    KC_G,                         KC_H,    MT(MOD_RCTL, KC_J), MT(MOD_RSFT, KC_K), MT(MOD_LALT, KC_L), MT(MOD_RGUI, KC_SCLN), I3,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        ENABLE_LT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, EMOJI,\
+        MOUSEL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, MOUSER,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_ESC, LT(ARROW, KC_TAB), LT(LOWER, KC_SPC),    LT(RAISE, KC_BSPC), KC_ENT, KC_QUOT \
+                                        LT(MOUSEL, KC_ESC), LT(ARROW, KC_TAB), LT(LOWER, KC_SPC),    LT(RAISE, KC_BSPC), KC_ENT, LT(MOUSER, KC_QUOT) \
                                       //`--------------------------'  `--------------------------'
   ),
 
